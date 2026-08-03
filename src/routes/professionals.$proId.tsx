@@ -119,7 +119,7 @@ function ProfilePage() {
           <section data-reveal>
             <h2 className="text-xl font-semibold">Skills</h2>
             <div className="mt-4 flex flex-wrap gap-2">
-              {pro.skills.map((s) => (
+              {pro.skills.map((s: string) => (
                 <Badge key={s} variant="outline" className="px-3 py-1.5 text-sm">
                   {s}
                 </Badge>
