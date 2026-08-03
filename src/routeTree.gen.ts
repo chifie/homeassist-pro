@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProDashboardRouteImport } from './routes/pro-dashboard'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProfessionalsProIdRouteImport } from './routes/professionals.$proId'
 
@@ -25,9 +27,19 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProDashboardRoute = ProDashboardRouteImport.update({
   id: '/pro-dashboard',
   path: '/pro-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -44,14 +56,18 @@ const ProfessionalsProIdRoute = ProfessionalsProIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/pro-dashboard': typeof ProDashboardRoute
+  '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/pro-dashboard': typeof ProDashboardRoute
+  '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
@@ -59,7 +75,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/login': typeof LoginRoute
   '/pro-dashboard': typeof ProDashboardRoute
+  '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
@@ -68,21 +86,27 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/login'
     | '/pro-dashboard'
+    | '/register'
     | '/services'
     | '/professionals/$proId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard'
+    | '/login'
     | '/pro-dashboard'
+    | '/register'
     | '/services'
     | '/professionals/$proId'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/login'
     | '/pro-dashboard'
+    | '/register'
     | '/services'
     | '/professionals/$proId'
   fileRoutesById: FileRoutesById
@@ -90,7 +114,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  LoginRoute: typeof LoginRoute
   ProDashboardRoute: typeof ProDashboardRoute
+  RegisterRoute: typeof RegisterRoute
   ServicesRoute: typeof ServicesRoute
   ProfessionalsProIdRoute: typeof ProfessionalsProIdRoute
 }
@@ -111,11 +137,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro-dashboard': {
       id: '/pro-dashboard'
       path: '/pro-dashboard'
       fullPath: '/pro-dashboard'
       preLoaderRoute: typeof ProDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -138,7 +178,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  LoginRoute: LoginRoute,
   ProDashboardRoute: ProDashboardRoute,
+  RegisterRoute: RegisterRoute,
   ServicesRoute: ServicesRoute,
   ProfessionalsProIdRoute: ProfessionalsProIdRoute,
 }
