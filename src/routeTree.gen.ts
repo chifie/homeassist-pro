@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ProDashboardRouteImport } from './routes/pro-dashboard'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProfessionalsProIdRouteImport } from './routes/professionals.$proId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProDashboardRoute = ProDashboardRouteImport.update({
+  id: '/pro-dashboard',
+  path: '/pro-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -31,30 +43,54 @@ const ProfessionalsProIdRoute = ProfessionalsProIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/pro-dashboard': typeof ProDashboardRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/pro-dashboard': typeof ProDashboardRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/pro-dashboard': typeof ProDashboardRoute
   '/services': typeof ServicesRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/services' | '/professionals/$proId'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/pro-dashboard'
+    | '/services'
+    | '/professionals/$proId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/services' | '/professionals/$proId'
-  id: '__root__' | '/' | '/services' | '/professionals/$proId'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/pro-dashboard'
+    | '/services'
+    | '/professionals/$proId'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/pro-dashboard'
+    | '/services'
+    | '/professionals/$proId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  ProDashboardRoute: typeof ProDashboardRoute
   ServicesRoute: typeof ServicesRoute
   ProfessionalsProIdRoute: typeof ProfessionalsProIdRoute
 }
@@ -66,6 +102,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pro-dashboard': {
+      id: '/pro-dashboard'
+      path: '/pro-dashboard'
+      fullPath: '/pro-dashboard'
+      preLoaderRoute: typeof ProDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -87,6 +137,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  ProDashboardRoute: ProDashboardRoute,
   ServicesRoute: ServicesRoute,
   ProfessionalsProIdRoute: ProfessionalsProIdRoute,
 }
