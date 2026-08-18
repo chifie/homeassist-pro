@@ -8,10 +8,10 @@ import { AuthLayout } from "@/components/auth-layout";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Log in — HomeAssist" },
-      { name: "description", content: "Log in to manage your HomeAssist bookings and saved professionals." },
-      { property: "og:title", content: "Log in — HomeAssist" },
-      { property: "og:description", content: "Access your HomeAssist account." },
+      { title: "Log in — FundiLink" },
+      { name: "description", content: "Log in to manage your FundiLink bookings and saved professionals." },
+      { property: "og:title", content: "Log in — FundiLink" },
+      { property: "og:description", content: "Access your FundiLink account." },
     ],
   }),
   component: LoginPage,
@@ -24,7 +24,7 @@ function LoginPage() {
       subtitle="Log in to track requests and rebook your favourite pros."
       footer={
         <>
-          New to HomeAssist?{" "}
+          New to FundiLink?{" "}
           <Link to="/register" className="font-semibold text-primary hover:underline">
             Create an account
           </Link>

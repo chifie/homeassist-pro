@@ -168,7 +168,7 @@ export const reviewsFor = (id: string) =>
       name: "Hannah W.",
       rating: 5,
       date: "2 weeks ago",
-      text: "Arrived on time, explained everything clearly and left the place spotless. Booking through HomeAssist took under two minutes.",
+      text: "Arrived on time, explained everything clearly and left the place spotless. Booking through FundiLink took under two minutes.",
     },
     {
       name: "Ben Carter",

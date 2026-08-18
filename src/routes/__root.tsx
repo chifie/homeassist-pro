@@ -79,13 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HomeAssist — Trusted home service professionals" },
+      { title: "FundiLink — Trusted home service professionals" },
       {
         name: "description",
         content:
-          "Book background-checked electricians, plumbers, cleaners and technicians near you with HomeAssist.",
+          "Book background-checked electricians, plumbers, cleaners and technicians near you with FundiLink.",
       },
-      { name: "author", content: "HomeAssist" },
+      { name: "author", content: "FundiLink" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

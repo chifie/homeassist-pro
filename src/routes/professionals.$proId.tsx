@@ -16,11 +16,11 @@ export const Route = createFileRoute("/professionals/$proId")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Professional not found — HomeAssist" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Professional not found — FundiLink" }, { name: "robots", content: "noindex" }],
       };
     }
     const { pro } = loaderData;
-    const title = `${pro.name} — ${pro.profession} | HomeAssist`;
+    const title = `${pro.name} — ${pro.profession} | FundiLink`;
     const description = `${pro.profession} in ${pro.city}. ${pro.years} years experience, rated ${pro.rating}/5 from ${pro.reviews} reviews.`;
     return {
       meta: [
@@ -102,7 +102,7 @@ function ProfilePage() {
               </Button>
               <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
                 <Shield size={14} className="mt-0.5 shrink-0" aria-hidden />
-                Covered by the HomeAssist 30-day workmanship guarantee.
+                Covered by the FundiLink 30-day workmanship guarantee.
               </p>
             </aside>
           </div>

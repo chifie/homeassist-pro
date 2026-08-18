@@ -21,12 +21,12 @@ import { useRevealOnScroll } from "@/lib/gsap";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Your dashboard — HomeAssist" },
+      { title: "Your dashboard — FundiLink" },
       {
         name: "description",
         content: "Track service requests, saved professionals and account settings in one place.",
       },
-      { property: "og:title", content: "Your dashboard — HomeAssist" },
+      { property: "og:title", content: "Your dashboard — FundiLink" },
       {
         property: "og:description",
         content: "Track service requests, saved professionals and account settings.",

@@ -14,16 +14,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/pro-dashboard")({
   head: () => ({
     meta: [
-      { title: "Professional dashboard — HomeAssist" },
+      { title: "Professional dashboard — FundiLink" },
       {
         name: "description",
         content:
-          "Manage your listings, customer requests, reviews and availability as a HomeAssist professional.",
+          "Manage your listings, customer requests, reviews and availability as a FundiLink professional.",
       },
-      { property: "og:title", content: "Professional dashboard — HomeAssist" },
+      { property: "og:title", content: "Professional dashboard — FundiLink" },
       {
         property: "og:description",
-        content: "Manage listings, requests, reviews and availability on HomeAssist.",
+        content: "Manage listings, requests, reviews and availability on FundiLink.",
       },
     ],
   }),

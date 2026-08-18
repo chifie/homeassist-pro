@@ -15,13 +15,13 @@ export const Route = createFileRoute("/services")({
   }),
   head: () => ({
     meta: [
-      { title: "Find a service — HomeAssist" },
+      { title: "Find a service — FundiLink" },
       {
         name: "description",
         content:
           "Search verified electricians, plumbers, cleaners and technicians by category, location and rating.",
       },
-      { property: "og:title", content: "Find a service — HomeAssist" },
+      { property: "og:title", content: "Find a service — FundiLink" },
       {
         property: "og:description",
         content: "Search verified home service professionals by category, location and rating.",
