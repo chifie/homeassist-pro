@@ -95,7 +95,7 @@ function TechnicianApp() {
   const advance = (id: string) =>
     setJobs((js) =>
       js.map((j) =>
-        j.id === id ? { ...j, status: flow[Math.min(flow.indexOf(j.status) + 1, 3)] } : j,
+        j.id === id ? { ...j, status: flow[Math.min(flow.indexOf(j.status) + 1, 3)] ?? "done" } : j,
       ),
     );
 
