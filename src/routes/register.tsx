@@ -10,13 +10,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "Create an account — HomeAssist" },
+      { title: "Create an account — FundiLink" },
       {
         name: "description",
-        content: "Join HomeAssist as a homeowner or a professional and start booking in minutes.",
+        content: "Join FundiLink as a homeowner or a professional and start booking in minutes.",
       },
-      { property: "og:title", content: "Create an account — HomeAssist" },
-      { property: "og:description", content: "Join HomeAssist as a homeowner or a professional." },
+      { property: "og:title", content: "Create an account — FundiLink" },
+      { property: "og:description", content: "Join FundiLink as a homeowner or a professional." },
     ],
   }),
   component: RegisterPage,
@@ -83,7 +83,7 @@ function RegisterPage() {
           <Input id="password" type="password" placeholder="At least 8 characters" autoComplete="new-password" />
         </div>
         <label data-auth-field className="flex items-start gap-2 text-sm text-muted-foreground">
-          <Checkbox id="terms" className="mt-0.5" /> I agree to the HomeAssist terms and privacy
+          <Checkbox id="terms" className="mt-0.5" /> I agree to the FundiLink terms and privacy
           policy.
         </label>
         <Button data-auth-field type="submit" size="lg" className="w-full">

@@ -10,18 +10,17 @@ import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/services")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    category: typeof search["category"] === "string" ? (search["category"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { category?: string } =>
+    typeof search["category"] === "string" ? { category: search["category"] as string } : {},
   head: () => ({
     meta: [
-      { title: "Find a service — HomeAssist" },
+      { title: "Find a service — FundiLink" },
       {
         name: "description",
         content:
           "Search verified electricians, plumbers, cleaners and technicians by category, location and rating.",
       },
-      { property: "og:title", content: "Find a service — HomeAssist" },
+      { property: "og:title", content: "Find a service — FundiLink" },
       {
         property: "og:description",
         content: "Search verified home service professionals by category, location and rating.",

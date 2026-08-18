@@ -21,7 +21,7 @@ export function Navbar() {
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl gradient-brand text-primary-foreground">
             <Home size={18} aria-hidden />
           </span>
-          <span className="font-display text-lg font-bold tracking-tight">HomeAssist</span>
+          <span className="font-display text-lg font-bold tracking-tight">FundiLink</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">

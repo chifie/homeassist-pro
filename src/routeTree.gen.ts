@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProDashboardRouteImport } from './routes/pro-dashboard'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TechnicianRouteImport } from './routes/technician'
 import { Route as ProfessionalsProIdRouteImport } from './routes/professionals.$proId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TechnicianRoute = TechnicianRouteImport.update({
+  id: '/technician',
+  path: '/technician',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfessionalsProIdRoute = ProfessionalsProIdRouteImport.update({
   id: '/professionals/$proId',
   path: '/professionals/$proId',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/pro-dashboard': typeof ProDashboardRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/technician': typeof TechnicianRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/pro-dashboard': typeof ProDashboardRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/technician': typeof TechnicianRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/pro-dashboard': typeof ProDashboardRoute
   '/register': typeof RegisterRoute
   '/services': typeof ServicesRoute
+  '/technician': typeof TechnicianRoute
   '/professionals/$proId': typeof ProfessionalsProIdRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/pro-dashboard'
     | '/register'
     | '/services'
+    | '/technician'
     | '/professionals/$proId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/pro-dashboard'
     | '/register'
     | '/services'
+    | '/technician'
     | '/professionals/$proId'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/pro-dashboard'
     | '/register'
     | '/services'
+    | '/technician'
     | '/professionals/$proId'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   ProDashboardRoute: typeof ProDashboardRoute
   RegisterRoute: typeof RegisterRoute
   ServicesRoute: typeof ServicesRoute
+  TechnicianRoute: typeof TechnicianRoute
   ProfessionalsProIdRoute: typeof ProfessionalsProIdRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/technician': {
+      id: '/technician'
+      path: '/technician'
+      fullPath: '/technician'
+      preLoaderRoute: typeof TechnicianRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/professionals/$proId': {
       id: '/professionals/$proId'
       path: '/professionals/$proId'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProDashboardRoute: ProDashboardRoute,
   RegisterRoute: RegisterRoute,
   ServicesRoute: ServicesRoute,
+  TechnicianRoute: TechnicianRoute,
   ProfessionalsProIdRoute: ProfessionalsProIdRoute,
 }
 export const routeTree = rootRouteImport

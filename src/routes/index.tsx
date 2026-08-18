@@ -23,16 +23,16 @@ import heroPro from "@/assets/hero-pro.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HomeAssist — Trusted professionals for your home" },
+      { title: "FundiLink — Trusted professionals for your home" },
       {
         name: "description",
         content:
           "Find vetted electricians, plumbers, cleaners and technicians near you. Transparent pricing, verified reviews and a workmanship guarantee.",
       },
-      { property: "og:title", content: "HomeAssist — Trusted professionals for your home" },
+      { property: "og:title", content: "FundiLink — Trusted professionals for your home" },
       {
         property: "og:description",
-        content: "Book background-checked home service pros in minutes with HomeAssist.",
+        content: "Book background-checked home service pros in minutes with FundiLink.",
       },
     ],
   }),
@@ -62,7 +62,7 @@ const reasons = [
 
 const testimonials = [
   { name: "Hannah Wells", role: "Homeowner, Austin", rating: 5, text: "Booked an electrician at 8am and had the panel fixed by lunch. The price I saw was the price I paid." },
-  { name: "Ben Carter", role: "Landlord, Denver", rating: 5, text: "I manage six units. HomeAssist replaced three separate contractor relationships and half my admin." },
+  { name: "Ben Carter", role: "Landlord, Denver", rating: 5, text: "I manage six units. FundiLink replaced three separate contractor relationships and half my admin." },
   { name: "Dana Alves", role: "Homeowner, Seattle", rating: 5, text: "The reviews are clearly real. Every pro I've hired has shown up on time and left the place tidy." },
 ];
 
@@ -155,7 +155,7 @@ function Landing() {
               src={heroPro}
               width={1008}
               height={1200}
-              alt="HomeAssist electrician with a tablet in a bright living room"
+              alt="FundiLink electrician with a tablet in a bright living room"
               className="w-full rounded-3xl object-cover shadow-lift"
             />
             <div className="absolute -bottom-6 left-4 right-4 rounded-2xl glass p-4 shadow-lift sm:left-8 sm:right-auto sm:w-72">
@@ -229,7 +229,7 @@ function Landing() {
         <div className="overflow-hidden rounded-3xl border bg-surface shadow-soft">
           <div className="grid gap-10 p-8 lg:grid-cols-[1fr_1.2fr] lg:p-12">
             <SectionHeading
-              eyebrow="Why HomeAssist"
+              eyebrow="Why FundiLink"
               title="Built around trust, not luck"
               description="We hold professionals to a standard you'd expect from your own family's tradesperson."
             />

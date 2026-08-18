@@ -19,7 +19,7 @@ export function Footer() {
             <span className="grid h-9 w-9 place-items-center rounded-xl gradient-brand text-primary-foreground">
               <Home size={18} aria-hidden />
             </span>
-            <span className="font-display text-lg font-bold">HomeAssist</span>
+            <span className="font-display text-lg font-bold">FundiLink</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
             Trusted, background-checked professionals for every job around your home — booked in
@@ -48,7 +48,7 @@ export function Footer() {
       <div className="border-t">
         <div className="container-page flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} HomeAssist. All rights reserved.
+            © {new Date().getFullYear()} FundiLink. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">Privacy · Terms · Cookies</p>
         </div>

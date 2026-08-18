@@ -35,7 +35,7 @@ export function AuthLayout({
             <span className="grid h-9 w-9 place-items-center rounded-xl gradient-brand text-primary-foreground">
               <Home size={18} aria-hidden />
             </span>
-            <span className="font-display text-lg font-bold">HomeAssist</span>
+            <span className="font-display text-lg font-bold">FundiLink</span>
           </Link>
 
           <h1 className="mt-8 text-3xl font-bold">{title}</h1>
@@ -52,7 +52,7 @@ export function AuthLayout({
         className="relative hidden flex-col justify-between overflow-hidden gradient-brand p-12 text-primary-foreground lg:flex"
       >
         <p className="text-sm font-semibold uppercase tracking-widest text-primary-foreground/70">
-          HomeAssist
+          FundiLink
         </p>
         <div>
           <h2 className="max-w-md text-4xl font-bold leading-tight">
