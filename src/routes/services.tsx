@@ -10,7 +10,7 @@ import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/services")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { category?: string } => ({
     category: typeof search["category"] === "string" ? (search["category"] as string) : undefined,
   }),
   head: () => ({
