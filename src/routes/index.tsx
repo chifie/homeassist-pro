@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PageShell, SectionHeading } from "@/components/page-shell";
 import { StarRating } from "@/components/star-rating";
+import { Skeleton, SkeletonHero, SkeletonGrid } from "@/components/ui/skeleton";
 import { useGsap, useRevealOnScroll } from "@/lib/gsap";
 import heroPro from "@/assets/hero-pro.jpg";
 
@@ -157,10 +158,38 @@ const stats = [
   { value: "< 2 hrs", label: "Median response" },
 ];
 
+function LandingSkeleton() {
+  return (
+    <PageShell>
+      <section className="relative overflow-hidden gradient-hero">
+        <div className="container-page">
+          <SkeletonHero />
+        </div>
+      </section>
+
+      <section className="container-page pt-28">
+        <div className="mx-auto max-w-2xl text-center">
+          <Skeleton className="mx-auto h-6 w-32 rounded-full" />
+          <Skeleton className="mx-auto mt-4 h-10 w-96 rounded-xl" />
+          <Skeleton className="mx-auto mt-3 h-5 w-80 rounded-lg" />
+        </div>
+        <SkeletonGrid count={5} />
+      </section>
+    </PageShell>
+  );
+}
+
 function Landing() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useGsap(({ gsap }) => {
+    if (loading) return;
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     tl.from("[data-hero-line]", {
       yPercent: 110,
@@ -180,9 +209,10 @@ function Landing() {
         { y: 14, opacity: 0, duration: 0.5, stagger: 0.08 },
         "-=0.6"
       );
-  }, []);
+  }, [loading]);
 
   useGsap(({ gsap }) => {
+    if (loading) return;
     gsap.utils
       .toArray<HTMLElement>("[data-service-card]")
       .forEach((el, i) => {
@@ -204,9 +234,11 @@ function Landing() {
           }
         );
       });
-  }, []);
+  }, [loading]);
 
   useRevealOnScroll();
+
+  if (loading) return <LandingSkeleton />;
 
   return (
     <PageShell>
