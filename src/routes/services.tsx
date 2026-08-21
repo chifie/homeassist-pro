@@ -1,11 +1,19 @@
 import { useMemo, useState, useEffect } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Search, SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageShell } from "@/components/page-shell";
 import { ProfessionalCard } from "@/components/professional-card";
 import { Skeleton, SkeletonGrid } from "@/components/ui/skeleton";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { categories, cities, professionals } from "@/data/professionals";
 import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -116,7 +124,21 @@ function ServicesPage() {
     <PageShell>
       <section className="gradient-hero border-b">
         <div className="container-page py-12">
-          <h1 className="text-3xl font-bold sm:text-4xl">Find a trusted professional</h1>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Find a service</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <h1 className="mt-4 text-3xl font-bold sm:text-4xl">Find a trusted professional</h1>
           <p className="mt-2 max-w-xl text-muted-foreground">
             {professionals.length} vetted pros across 5 categories. Filter by what you need and
             where you are.
