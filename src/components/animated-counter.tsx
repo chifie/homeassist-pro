@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 
 interface AnimatedCounterProps {
   value: number;
-  prefix?: string;
-  suffix?: string;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
   duration?: number;
   className?: string;
 }
@@ -60,8 +60,8 @@ export function AnimatedCounter({
 interface AnimatedStatProps {
   label: string;
   value: number;
-  prefix?: string;
-  suffix?: string;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
   description?: string;
   icon?: React.ReactNode;
 }
