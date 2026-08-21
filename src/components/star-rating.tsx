@@ -22,13 +22,18 @@ export function StarRating({
             key={i}
             size={size}
             aria-hidden
-            className={i < Math.round(value) ? "fill-current" : "opacity-30"}
+            className={cn(
+              "transition-transform duration-200",
+              i < Math.round(value) ? "fill-current" : "opacity-25"
+            )}
           />
         ))}
       </div>
-      {showValue && <span className="text-sm font-semibold">{value.toFixed(1)}</span>}
+      {showValue && (
+        <span className="text-sm font-semibold tabular-nums">{value.toFixed(1)}</span>
+      )}
       {reviews !== undefined && (
-        <span className="text-sm text-muted-foreground">({reviews})</span>
+        <span className="text-sm text-muted-foreground">({reviews.toLocaleString()})</span>
       )}
     </div>
   );
