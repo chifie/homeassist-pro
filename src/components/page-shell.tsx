@@ -22,8 +22,8 @@ export function PageShell({
     if (!ref.current) return;
     gsap.fromTo(
       ref.current,
-      { autoAlpha: 0, y: 14 },
-      { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" },
+      { autoAlpha: 0, y: 12 },
+      { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }
     );
   }, [pathname]);
 
@@ -52,12 +52,15 @@ export function SectionHeading({
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")} data-reveal>
       {eyebrow && (
-        <span className="inline-flex rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary dark:text-primary">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
           {eyebrow}
         </span>
       )}
-      <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{title}</h2>
-      {description && <p className="mt-3 text-base text-muted-foreground">{description}</p>}
+      <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>
+      {description && (
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground">{description}</p>
+      )}
     </div>
   );
 }
