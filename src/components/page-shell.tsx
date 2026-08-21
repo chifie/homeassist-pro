@@ -3,6 +3,7 @@ import { useRouterState } from "@tanstack/react-router";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { BackToTop } from "@/components/back-to-top";
+import { MobileNav } from "@/components/mobile-nav";
 import { useGsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
@@ -31,11 +32,12 @@ export function PageShell({
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main ref={ref} className={cn("flex-1", className)}>
+      <main ref={ref} className={cn("flex-1 pb-16 sm:pb-0", className)}>
         {children}
       </main>
       {!hideFooter && <Footer />}
       <BackToTop />
+      <MobileNav />
     </div>
   );
 }
