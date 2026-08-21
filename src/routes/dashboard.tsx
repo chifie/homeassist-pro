@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Bell,
@@ -16,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageShell } from "@/components/page-shell";
 import { StarRating } from "@/components/star-rating";
+import { Skeleton, SkeletonCard, SkeletonRow } from "@/components/ui/skeleton";
 import { professionals } from "@/data/professionals";
 import { useRevealOnScroll } from "@/lib/gsap";
 
@@ -108,9 +110,77 @@ const statusTone: Record<string, string> = {
   Completed: "bg-secondary text-secondary-foreground",
 };
 
+function DashboardSkeleton() {
+  return (
+    <PageShell>
+      <div className="container-page py-10">
+        <header className="flex items-center gap-3">
+          <Skeleton className="h-12 w-12 rounded-2xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-7 w-48 rounded-lg" />
+            <Skeleton className="h-4 w-36 rounded-lg" />
+          </div>
+        </header>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+          <div className="rounded-2xl border bg-card shadow-card">
+            <div className="flex items-center justify-between border-b p-5">
+              <Skeleton className="h-5 w-40 rounded-lg" />
+              <Skeleton className="h-8 w-16 rounded-lg" />
+            </div>
+            <div className="divide-y">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <SkeletonRow key={i} />
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border bg-card shadow-card">
+            <div className="flex items-center justify-between border-b p-5">
+              <Skeleton className="h-5 w-36 rounded-lg" />
+              <Skeleton className="h-5 w-5 rounded-lg" />
+            </div>
+            <div className="divide-y">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <SkeletonRow key={i} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 rounded-2xl border bg-card p-6 shadow-card">
+          <Skeleton className="h-5 w-36 rounded-lg" />
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="space-y-2">
+                <Skeleton className="h-4 w-20 rounded-lg" />
+                <Skeleton className="h-10 w-full rounded-xl" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </PageShell>
+  );
+}
+
 function Dashboard() {
+  const [loading, setLoading] = useState(true);
   useRevealOnScroll();
   const saved = professionals.slice(0, 4);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <DashboardSkeleton />;
 
   return (
     <PageShell>
