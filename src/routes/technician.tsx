@@ -32,7 +32,8 @@ export const Route = createFileRoute("/technician")({
       { property: "og:title", content: "Technician app — FundiLink" },
       {
         property: "og:description",
-        content: "Job cards, one-tap status updates, schedule and earnings for FundiLink technicians.",
+        content:
+          "Job cards, one-tap status updates, schedule and earnings for FundiLink technicians.",
       },
     ],
   }),
@@ -41,7 +42,15 @@ export const Route = createFileRoute("/technician")({
 
 type Status = "new" | "on the way" | "in progress" | "done";
 
-const initialJobs: { id: string; title: string; customer: string; time: string; address: string; pay: string; status: Status }[] = [
+const initialJobs: {
+  id: string;
+  title: string;
+  customer: string;
+  time: string;
+  address: string;
+  pay: string;
+  status: Status;
+}[] = [
   {
     id: "j1",
     title: "Consumer unit upgrade",
@@ -87,6 +96,25 @@ const statusTone: Record<Status, string> = {
   done: "bg-success/15 text-success-foreground dark:text-success",
 };
 
+const features = [
+  {
+    title: "One-tap status updates",
+    text: "Accept, mark on the way, arrived and complete — every state change notifies the customer instantly.",
+  },
+  {
+    title: "Gentle nudges",
+    text: "Reminders before each appointment, plus a heads-up when a nearby job matches your skills.",
+  },
+  {
+    title: "Paid on time",
+    text: "Weekly payouts with a clear breakdown of every job, tip and platform fee.",
+  },
+  {
+    title: "Skills and verification",
+    text: "Upload certifications once; the verified badge follows you across every listing.",
+  },
+];
+
 function TechnicianApp() {
   const [jobs, setJobs] = useState(initialJobs);
   const [online, setOnline] = useState(true);
@@ -95,8 +123,14 @@ function TechnicianApp() {
   const advance = (id: string) =>
     setJobs((js) =>
       js.map((j) =>
-        j.id === id ? { ...j, status: flow[Math.min(flow.indexOf(j.status) + 1, 3)] ?? "done" } : j,
-      ),
+        j.id === id
+          ? {
+              ...j,
+              status:
+                flow[Math.min(flow.indexOf(j.status) + 1, 3)] ?? "done",
+            }
+          : j
+      )
     );
 
   return (
@@ -130,7 +164,7 @@ function TechnicianApp() {
                     <p className="text-xs text-muted-foreground">Electrician · Level 3</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="icon" aria-label="Notifications">
+                <Button variant="ghost" size="icon" aria-label="Notifications" className="rounded-xl">
                   <Bell size={18} />
                 </Button>
               </div>
@@ -139,8 +173,8 @@ function TechnicianApp() {
                 <div className="flex items-center gap-2">
                   <span
                     className={cn(
-                      "h-2.5 w-2.5 rounded-full",
-                      online ? "bg-success" : "bg-muted-foreground",
+                      "h-2.5 w-2.5 rounded-full transition-colors",
+                      online ? "bg-success" : "bg-muted-foreground"
                     )}
                     aria-hidden
                   />
@@ -176,7 +210,7 @@ function TechnicianApp() {
                         {j.status}
                       </Badge>
                     </div>
-                    <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <p className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Clock size={13} aria-hidden /> {j.time}
                     </p>
                     <p className="mt-1 flex items-start gap-1.5 text-xs text-muted-foreground">
@@ -185,7 +219,7 @@ function TechnicianApp() {
                     <p className="mt-2 text-sm font-semibold">{j.pay}</p>
                     <div className="mt-3 flex gap-2">
                       <Button
-                        className="h-11 flex-1"
+                        className="h-11 flex-1 rounded-xl"
                         disabled={j.status === "done"}
                         onClick={() => advance(j.id)}
                       >
@@ -199,7 +233,7 @@ function TechnicianApp() {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="h-11 w-11"
+                        className="h-11 w-11 rounded-xl"
                         aria-label={`Call ${j.customer}`}
                       >
                         <Phone size={16} />
@@ -207,7 +241,7 @@ function TechnicianApp() {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="h-11 w-11"
+                        className="h-11 w-11 rounded-xl"
                         aria-label={`Navigate to ${j.address}`}
                       >
                         <Navigation size={16} />
@@ -219,28 +253,15 @@ function TechnicianApp() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            {[
-              {
-                title: "One-tap status updates",
-                text: "Accept, mark on the way, arrived and complete — every state change notifies the customer instantly.",
-              },
-              {
-                title: "Gentle nudges",
-                text: "Reminders before each appointment, plus a heads-up when a nearby job matches your skills.",
-              },
-              {
-                title: "Paid on time",
-                text: "Weekly payouts with a clear breakdown of every job, tip and platform fee.",
-              },
-              {
-                title: "Skills and verification",
-                text: "Upload certifications once; the verified badge follows you across every listing.",
-              },
-            ].map((f) => (
-              <article key={f.title} data-reveal className="rounded-2xl border bg-card p-6 shadow-soft">
+          <div className="space-y-5">
+            {features.map((f) => (
+              <article
+                key={f.title}
+                data-reveal
+                className="rounded-2xl border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+              >
                 <h3 className="text-lg font-semibold">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{f.text}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.text}</p>
               </article>
             ))}
           </div>
