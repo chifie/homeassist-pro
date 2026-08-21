@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Search, SlidersHorizontal } from "lucide-react";
+import { MapPin, Search, SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageShell } from "@/components/page-shell";
@@ -10,8 +10,12 @@ import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/services")({
-  validateSearch: (search: Record<string, unknown>): { category?: string } =>
-    typeof search["category"] === "string" ? { category: search["category"] as string } : {},
+  validateSearch: (
+    search: Record<string, unknown>
+  ): { category?: string } =>
+    typeof search["category"] === "string"
+      ? { category: search["category"] as string }
+      : {},
   head: () => ({
     meta: [
       { title: "Find a service — FundiLink" },
@@ -23,7 +27,8 @@ export const Route = createFileRoute("/services")({
       { property: "og:title", content: "Find a service — FundiLink" },
       {
         property: "og:description",
-        content: "Search verified home service professionals by category, location and rating.",
+        content:
+          "Search verified home service professionals by category, location and rating.",
       },
     ],
   }),
@@ -42,7 +47,10 @@ function ServicesPage() {
     return professionals.filter((p) => {
       const matchQuery =
         !q ||
-        [p.name, p.profession, p.category, ...p.skills].join(" ").toLowerCase().includes(q);
+        [p.name, p.profession, p.category, ...p.skills]
+          .join(" ")
+          .toLowerCase()
+          .includes(q);
       const matchCategory = activeCategory === "All" || p.category === activeCategory;
       const matchCity = city === cities[0] || p.city === city;
       const matchAvailable = !availableOnly || p.available;
@@ -51,6 +59,19 @@ function ServicesPage() {
   }, [query, activeCategory, city, availableOnly]);
 
   useRevealOnScroll("[data-reveal]", [results.length]);
+
+  const hasFilters =
+    query ||
+    activeCategory !== "All" ||
+    city !== cities[0] ||
+    availableOnly;
+
+  const clearFilters = () => {
+    setQuery("");
+    setActiveCategory("All");
+    setCity(cities[0]);
+    setAvailableOnly(false);
+  };
 
   return (
     <PageShell>
@@ -74,7 +95,7 @@ function ServicesPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search e.g. leak, EV charger, deep clean"
                 aria-label="Search services"
-                className="h-12 border-0 pl-10 shadow-none focus-visible:ring-0"
+                className="h-12 rounded-xl border-0 pl-10 shadow-none focus-visible:ring-0"
               />
             </div>
             <div className="relative mt-2 sm:mt-0 sm:w-56">
@@ -87,14 +108,14 @@ function ServicesPage() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 aria-label="Filter by location"
-                className="h-12 w-full appearance-none rounded-md bg-transparent pl-10 pr-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="h-12 w-full appearance-none rounded-xl bg-transparent pl-10 pr-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {cities.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
               </select>
             </div>
-            <Button size="lg" className="mt-2 w-full sm:mt-0 sm:w-auto">
+            <Button size="lg" className="mt-2 w-full rounded-xl sm:mt-0 sm:w-auto">
               Search
             </Button>
           </div>
@@ -107,10 +128,10 @@ function ServicesPage() {
                 onClick={() => setActiveCategory(c)}
                 aria-pressed={activeCategory === c}
                 className={cn(
-                  "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200",
                   activeCategory === c
-                    ? "border-transparent bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:text-foreground",
+                    ? "border-transparent bg-primary text-primary-foreground shadow-soft"
+                    : "bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground"
                 )}
               >
                 {c}
@@ -121,15 +142,27 @@ function ServicesPage() {
               onClick={() => setAvailableOnly((v) => !v)}
               aria-pressed={availableOnly}
               className={cn(
-                "ml-auto inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                "ml-auto inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200",
                 availableOnly
                   ? "border-transparent bg-success/20 text-success-foreground dark:text-success"
-                  : "bg-card text-muted-foreground hover:text-foreground",
+                  : "bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground"
               )}
             >
               <SlidersHorizontal size={15} aria-hidden /> Available now
             </button>
           </div>
+
+          {hasFilters && (
+            <div className="mt-4 flex items-center gap-2">
+              <button
+                onClick={clearFilters}
+                className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              >
+                <X size={12} aria-hidden />
+                Clear all filters
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -144,6 +177,13 @@ function ServicesPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Try widening your location or clearing the category filter.
             </p>
+            <Button
+              variant="outline"
+              className="mt-4 rounded-xl"
+              onClick={clearFilters}
+            >
+              Clear all filters
+            </Button>
           </div>
         ) : (
           <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
