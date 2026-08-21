@@ -7,6 +7,7 @@ import {
   Home,
   Receipt,
   Settings,
+  TrendingUp,
   Wrench,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -24,12 +25,14 @@ export const Route = createFileRoute("/dashboard")({
       { title: "Your dashboard — FundiLink" },
       {
         name: "description",
-        content: "Track service requests, saved professionals and account settings in one place.",
+        content:
+          "Track service requests, saved professionals and account settings in one place.",
       },
       { property: "og:title", content: "Your dashboard — FundiLink" },
       {
         property: "og:description",
-        content: "Track service requests, saved professionals and account settings.",
+        content:
+          "Track service requests, saved professionals and account settings.",
       },
     ],
   }),
@@ -37,17 +40,65 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const overview = [
-  { icon: Wrench, label: "Active requests", value: "3", hint: "1 scheduled today" },
-  { icon: Clock, label: "Hours saved", value: "27", hint: "This quarter" },
-  { icon: Heart, label: "Saved pros", value: "6", hint: "Across 4 categories" },
-  { icon: Receipt, label: "Spent this year", value: "$1,840", hint: "12 completed jobs" },
+  {
+    icon: Wrench,
+    label: "Active requests",
+    value: "3",
+    hint: "1 scheduled today",
+    trend: "+1 this week",
+  },
+  {
+    icon: Clock,
+    label: "Hours saved",
+    value: "27",
+    hint: "This quarter",
+    trend: "+5 vs last quarter",
+  },
+  {
+    icon: Heart,
+    label: "Saved pros",
+    value: "6",
+    hint: "Across 4 categories",
+    trend: "+2 new saves",
+  },
+  {
+    icon: Receipt,
+    label: "Spent this year",
+    value: "$1,840",
+    hint: "12 completed jobs",
+    trend: "-8% vs last year",
+  },
 ];
 
 const requests = [
-  { id: "HA-4821", service: "Kitchen socket replacement", pro: "Marcus Hale", date: "Today, 14:00", status: "Scheduled" },
-  { id: "HA-4790", service: "Bathroom leak inspection", pro: "Elena Ruiz", date: "Tomorrow, 09:30", status: "Confirmed" },
-  { id: "HA-4762", service: "Quarterly deep clean", pro: "Priya Nair", date: "12 Aug", status: "Awaiting pro" },
-  { id: "HA-4711", service: "Dishwasher repair", pro: "David Okoye", date: "28 Jul", status: "Completed" },
+  {
+    id: "HA-4821",
+    service: "Kitchen socket replacement",
+    pro: "Marcus Hale",
+    date: "Today, 14:00",
+    status: "Scheduled",
+  },
+  {
+    id: "HA-4790",
+    service: "Bathroom leak inspection",
+    pro: "Elena Ruiz",
+    date: "Tomorrow, 09:30",
+    status: "Confirmed",
+  },
+  {
+    id: "HA-4762",
+    service: "Quarterly deep clean",
+    pro: "Priya Nair",
+    date: "12 Aug",
+    status: "Awaiting pro",
+  },
+  {
+    id: "HA-4711",
+    service: "Dishwasher repair",
+    pro: "David Okoye",
+    date: "28 Jul",
+    status: "Completed",
+  },
 ];
 
 const statusTone: Record<string, string> = {
@@ -75,10 +126,10 @@ function Dashboard() {
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <Button variant="outline" size="icon" aria-label="Notifications">
+            <Button variant="outline" size="icon" aria-label="Notifications" className="rounded-xl">
               <Bell size={18} />
             </Button>
-            <Button asChild>
+            <Button asChild className="rounded-xl">
               <Link to="/services">Book a service</Link>
             </Button>
           </div>
@@ -86,10 +137,20 @@ function Dashboard() {
 
         <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {overview.map((c) => (
-            <div key={c.label} data-reveal className="lift rounded-2xl border bg-card p-5 shadow-soft">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary">
-                <c.icon size={18} aria-hidden />
-              </span>
+            <div
+              key={c.label}
+              data-reveal
+              className="group rounded-2xl border bg-card p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+            >
+              <div className="flex items-center justify-between">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary transition-transform duration-300 group-hover:scale-110">
+                  <c.icon size={18} aria-hidden />
+                </span>
+                <span className="inline-flex items-center gap-1 text-xs text-success">
+                  <TrendingUp size={12} aria-hidden />
+                  {c.trend}
+                </span>
+              </div>
               <p className="mt-4 font-display text-3xl font-bold">{c.value}</p>
               <p className="text-sm font-medium">{c.label}</p>
               <p className="text-xs text-muted-foreground">{c.hint}</p>
@@ -98,14 +159,19 @@ function Dashboard() {
         </section>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-          <section data-reveal className="rounded-2xl border bg-card shadow-soft">
+          <section data-reveal className="rounded-2xl border bg-card shadow-card">
             <div className="flex items-center justify-between border-b p-5">
               <h2 className="text-lg font-semibold">Recent service requests</h2>
-              <Button variant="ghost" size="sm">View all</Button>
+              <Button variant="ghost" size="sm" className="rounded-xl">
+                View all
+              </Button>
             </div>
             <ul className="divide-y">
               {requests.map((r) => (
-                <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 p-5">
+                <li
+                  key={r.id}
+                  className="flex flex-wrap items-center justify-between gap-3 p-5 transition-colors hover:bg-secondary/50"
+                >
                   <div className="min-w-0">
                     <p className="truncate font-medium">{r.service}</p>
                     <p className="text-sm text-muted-foreground">
@@ -118,22 +184,32 @@ function Dashboard() {
             </ul>
           </section>
 
-          <section data-reveal className="rounded-2xl border bg-card shadow-soft">
+          <section data-reveal className="rounded-2xl border bg-card shadow-card">
             <div className="flex items-center justify-between border-b p-5">
               <h2 className="text-lg font-semibold">Saved professionals</h2>
               <Heart size={18} className="text-accent" aria-hidden />
             </div>
             <ul className="divide-y">
               {saved.map((p) => (
-                <li key={p.id} className="flex items-center gap-3 p-4">
-                  <img src={p.image} alt={p.name} loading="lazy" className="h-11 w-11 rounded-xl object-cover" />
+                <li
+                  key={p.id}
+                  className="flex items-center gap-3 p-4 transition-colors hover:bg-secondary/50"
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    className="h-11 w-11 rounded-xl object-cover"
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">{p.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{p.profession}</p>
                     <StarRating value={p.rating} size={12} className="mt-0.5" />
                   </div>
-                  <Button asChild variant="ghost" size="sm">
-                    <Link to="/professionals/$proId" params={{ proId: p.id }}>Book</Link>
+                  <Button asChild variant="ghost" size="sm" className="rounded-xl">
+                    <Link to="/professionals/$proId" params={{ proId: p.id }}>
+                      Book
+                    </Link>
                   </Button>
                 </li>
               ))}
@@ -141,7 +217,7 @@ function Dashboard() {
           </section>
         </div>
 
-        <section data-reveal className="mt-10 rounded-2xl border bg-card p-6 shadow-soft">
+        <section data-reveal className="mt-10 rounded-2xl border bg-card p-6 shadow-card">
           <div className="flex items-center gap-2">
             <Settings size={18} className="text-primary" aria-hidden />
             <h2 className="text-lg font-semibold">Profile settings</h2>
@@ -149,23 +225,25 @@ function Dashboard() {
           <form className="mt-6 grid gap-5 sm:grid-cols-2" onSubmit={(e) => e.preventDefault()}>
             <div className="grid gap-2">
               <Label htmlFor="name">Full name</Label>
-              <Input id="name" defaultValue="Hannah Wells" />
+              <Input id="name" defaultValue="Hannah Wells" className="rounded-xl" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" defaultValue="hannah@example.com" />
+              <Input id="email" type="email" defaultValue="hannah@example.com" className="rounded-xl" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" defaultValue="+1 (512) 555-0142" />
+              <Input id="phone" defaultValue="+1 (512) 555-0142" className="rounded-xl" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="address">Service address</Label>
-              <Input id="address" defaultValue="1204 Cedar St, Austin, TX" />
+              <Input id="address" defaultValue="1204 Cedar St, Austin, TX" className="rounded-xl" />
             </div>
             <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
-              <Button type="submit">Save changes</Button>
-              <Button type="button" variant="outline">
+              <Button type="submit" className="rounded-xl">
+                Save changes
+              </Button>
+              <Button type="button" variant="outline" className="rounded-xl">
                 <CreditCard size={16} aria-hidden /> Manage payment methods
               </Button>
             </div>
