@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageShell } from "@/components/page-shell";
 import { StarRating } from "@/components/star-rating";
+import { Skeleton, SkeletonCard, SkeletonRow } from "@/components/ui/skeleton";
 import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
@@ -148,16 +149,83 @@ const flagged = [
   },
 ];
 
+function AdminDashboardSkeleton() {
+  return (
+    <PageShell>
+      <div className="container-page py-10">
+        <header className="flex items-center gap-3">
+          <Skeleton className="h-6 w-16 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-56 rounded-xl" />
+            <Skeleton className="h-4 w-72 rounded-lg" />
+          </div>
+        </header>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+          <div className="rounded-2xl border bg-card shadow-card">
+            <div className="flex items-center justify-between border-b p-5">
+              <Skeleton className="h-5 w-44 rounded-lg" />
+              <Skeleton className="h-6 w-16 rounded-full" />
+            </div>
+            <div className="divide-y">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonRow key={i} />
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border bg-card shadow-card">
+            <div className="flex items-center justify-between border-b p-5">
+              <Skeleton className="h-5 w-36 rounded-lg" />
+              <Skeleton className="h-10 w-64 rounded-xl" />
+            </div>
+            <div className="p-5">
+              <Skeleton className="h-64 w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 rounded-2xl border bg-card p-6 shadow-card">
+          <Skeleton className="h-5 w-32 rounded-lg" />
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="rounded-xl bg-secondary/60 p-4">
+                <Skeleton className="h-4 w-32 rounded-lg" />
+                <Skeleton className="mt-2 h-3 w-full rounded-lg" />
+                <Skeleton className="mt-3 h-8 w-24 rounded-xl" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </PageShell>
+  );
+}
+
 function AdminDashboard() {
   const [reviewed, setReviewed] = useState<string[]>([]);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
   useRevealOnScroll();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
 
   const visible = requests.filter((r) =>
     `${r.id} ${r.customer} ${r.service} ${r.tech}`
       .toLowerCase()
       .includes(query.toLowerCase())
   );
+
+  if (loading) return <AdminDashboardSkeleton />;
 
   return (
     <PageShell>
