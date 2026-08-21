@@ -2,6 +2,7 @@ import { useRef, type ReactNode } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { BackToTop } from "@/components/back-to-top";
 import { useGsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
@@ -34,6 +35,7 @@ export function PageShell({
         {children}
       </main>
       {!hideFooter && <Footer />}
+      <BackToTop />
     </div>
   );
 }
