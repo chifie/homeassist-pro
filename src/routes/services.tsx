@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, Search, SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageShell } from "@/components/page-shell";
 import { ProfessionalCard } from "@/components/professional-card";
+import { Skeleton, SkeletonGrid } from "@/components/ui/skeleton";
 import { categories, cities, professionals } from "@/data/professionals";
 import { useRevealOnScroll } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -35,12 +36,48 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
+function ServicesSkeleton() {
+  return (
+    <PageShell>
+      <section className="gradient-hero border-b">
+        <div className="container-page py-12">
+          <Skeleton className="h-9 w-72 rounded-xl" />
+          <Skeleton className="mt-2 h-5 w-96 rounded-lg" />
+
+          <div className="mt-8 rounded-2xl border bg-card p-3 shadow-soft sm:flex sm:items-center sm:gap-3">
+            <Skeleton className="h-12 flex-1 rounded-xl" />
+            <Skeleton className="mt-2 h-12 w-56 rounded-xl sm:mt-0" />
+            <Skeleton className="mt-2 h-12 w-24 rounded-xl sm:mt-0" />
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-9 w-24 rounded-full" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="container-page py-12">
+        <Skeleton className="h-4 w-48 rounded-lg" />
+        <SkeletonGrid count={6} />
+      </section>
+    </PageShell>
+  );
+}
+
 function ServicesPage() {
   const { category } = Route.useSearch();
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>(category ?? "All");
   const [city, setCity] = useState(cities[0]);
   const [availableOnly, setAvailableOnly] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -72,6 +109,8 @@ function ServicesPage() {
     setCity(cities[0]);
     setAvailableOnly(false);
   };
+
+  if (loading) return <ServicesSkeleton />;
 
   return (
     <PageShell>
