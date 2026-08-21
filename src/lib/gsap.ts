@@ -6,7 +6,7 @@ let registered = false;
 
 export function useGsap(
   setup: (ctx: { gsap: typeof gsap; ScrollTrigger: typeof ScrollTrigger }) => void,
-  deps: unknown[] = [],
+  deps: unknown[] = []
 ) {
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -21,20 +21,35 @@ export function useGsap(
 }
 
 /** Fade + rise reveal for every element matching `selector`, on scroll. */
-export function useRevealOnScroll(selector = "[data-reveal]", deps: unknown[] = []) {
+export function useRevealOnScroll(
+  selector = "[data-reveal]",
+  deps: unknown[] = []
+) {
   useGsap(({ gsap: g }) => {
+    // Respect reduced motion preference
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     const items = gsap.utils.toArray<HTMLElement>(selector);
-    items.forEach((el) => {
+    items.forEach((el, i) => {
+      if (prefersReducedMotion) {
+        // Just make visible without animation
+        g.set(el, { autoAlpha: 1 });
+        return;
+      }
+
       g.fromTo(
         el,
-        { autoAlpha: 0, y: 28 },
+        { autoAlpha: 0, y: 24 },
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.75,
+          duration: 0.65,
+          delay: i * 0.05,
           ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
-        },
+          scrollTrigger: { trigger: el, start: "top 90%", once: true },
+        }
       );
     });
   }, deps);
