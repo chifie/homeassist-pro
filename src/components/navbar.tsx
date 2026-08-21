@@ -35,7 +35,7 @@ export function Navbar() {
         scrolled && "shadow-soft"
       )}
     >
-      <nav className="container-page flex h-16 items-center justify-between gap-4">
+      <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label="Main navigation">
         <Link to="/" className="flex shrink-0 items-center gap-2.5 group" onClick={() => setOpen(false)}>
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl gradient-brand text-primary-foreground transition-transform duration-300 group-hover:scale-110">
             <Home size={18} aria-hidden />
@@ -45,13 +45,14 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 md:flex" role="menubar">
           {links.map((l) => {
             const isActive = location.pathname === l.to;
             return (
               <Link
                 key={l.to}
                 to={l.to}
+                role="menuitem"
                 className={cn(
                   "relative rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive
@@ -59,10 +60,11 @@ export function Navbar() {
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 )}
                 activeProps={{ className: "text-foreground" }}
+                aria-current={isActive ? "page" : undefined}
               >
                 {l.label}
                 {isActive && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary" />
+                  <span className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary" aria-hidden />
                 )}
               </Link>
             );
@@ -93,6 +95,7 @@ export function Navbar() {
             className="md:hidden rounded-xl"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls={open ? "mobile-menu" : undefined}
             onClick={() => setOpen((o) => !o)}
           >
             {open ? <X size={18} /> : <Menu size={18} />}
@@ -102,6 +105,8 @@ export function Navbar() {
 
       {/* Mobile menu with animation */}
       <div
+        id="mobile-menu"
+        role="menu"
         className={cn(
           "overflow-hidden border-t bg-card transition-all duration-300 ease-in-out md:hidden",
           open ? "max-h-80 opacity-100" : "max-h-0 opacity-0 border-t-transparent"
@@ -113,6 +118,7 @@ export function Navbar() {
               <Link
                 key={l.to}
                 to={l.to}
+                role="menuitem"
                 onClick={() => setOpen(false)}
                 className={cn(
                   "flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium transition-colors",
