@@ -6,6 +6,7 @@ import {
   Search,
   ShieldCheck,
   Star,
+  TrendingUp,
   Users,
   Wrench,
   X,
@@ -30,7 +31,8 @@ export const Route = createFileRoute("/admin")({
       { property: "og:title", content: "Admin dashboard — FundiLink" },
       {
         property: "og:description",
-        content: "Verify technicians, monitor requests and platform health on FundiLink.",
+        content:
+          "Verify technicians, monitor requests and platform health on FundiLink.",
       },
     ],
   }),
@@ -38,23 +40,90 @@ export const Route = createFileRoute("/admin")({
 });
 
 const stats = [
-  { icon: Users, label: "Active customers", value: "4,182", hint: "+312 this month" },
-  { icon: Wrench, label: "Technicians", value: "648", hint: "27 awaiting review" },
-  { icon: CircleDollarSign, label: "Payments processed", value: "TSh 84.6M", hint: "Last 30 days" },
-  { icon: Star, label: "Average rating", value: "4.8", hint: "Across 12,904 reviews" },
+  {
+    icon: Users,
+    label: "Active customers",
+    value: "4,182",
+    hint: "+312 this month",
+    trend: "+8.1%",
+  },
+  {
+    icon: Wrench,
+    label: "Technicians",
+    value: "648",
+    hint: "27 awaiting review",
+    trend: "+24 new",
+  },
+  {
+    icon: CircleDollarSign,
+    label: "Payments processed",
+    value: "TSh 84.6M",
+    hint: "Last 30 days",
+    trend: "+12.3%",
+  },
+  {
+    icon: Star,
+    label: "Average rating",
+    value: "4.8",
+    hint: "Across 12,904 reviews",
+    trend: "Stable",
+  },
 ];
 
 const pending = [
-  { name: "Joseph Mwakalinga", trade: "Plumber", licence: "PLM-20831", city: "Dar es Salaam" },
-  { name: "Rehema Kimaro", trade: "Electrician", licence: "ELC-44210", city: "Arusha" },
-  { name: "Salim Juma", trade: "Carpenter", licence: "CRP-10877", city: "Mwanza" },
+  {
+    name: "Joseph Mwakalinga",
+    trade: "Plumber",
+    licence: "PLM-20831",
+    city: "Dar es Salaam",
+  },
+  {
+    name: "Rehema Kimaro",
+    trade: "Electrician",
+    licence: "ELC-44210",
+    city: "Arusha",
+  },
+  {
+    name: "Salim Juma",
+    trade: "Carpenter",
+    licence: "CRP-10877",
+    city: "Mwanza",
+  },
 ];
 
 const requests = [
-  { id: "REQ-2841", customer: "Dana Alves", service: "Electrical", tech: "Marcus Hale", status: "In progress", amount: "TSh 240,000" },
-  { id: "REQ-2840", customer: "Ben Carter", service: "Plumbing", tech: "Elena Ruiz", status: "Scheduled", amount: "TSh 95,000" },
-  { id: "REQ-2838", customer: "Maya Roth", service: "Cleaning", tech: "Priya Nair", status: "Completed", amount: "TSh 130,000" },
-  { id: "REQ-2835", customer: "Ali Hassan", service: "Repairs", tech: "David Okoye", status: "Disputed", amount: "TSh 210,000" },
+  {
+    id: "REQ-2841",
+    customer: "Dana Alves",
+    service: "Electrical",
+    tech: "Marcus Hale",
+    status: "In progress",
+    amount: "TSh 240,000",
+  },
+  {
+    id: "REQ-2840",
+    customer: "Ben Carter",
+    service: "Plumbing",
+    tech: "Elena Ruiz",
+    status: "Scheduled",
+    amount: "TSh 95,000",
+  },
+  {
+    id: "REQ-2838",
+    customer: "Maya Roth",
+    service: "Cleaning",
+    tech: "Priya Nair",
+    status: "Completed",
+    amount: "TSh 130,000",
+  },
+  {
+    id: "REQ-2835",
+    customer: "Ali Hassan",
+    service: "Repairs",
+    tech: "David Okoye",
+    status: "Disputed",
+    amount: "TSh 210,000",
+  },
 ];
 
 const statusTone: Record<string, string> = {
@@ -65,8 +134,18 @@ const statusTone: Record<string, string> = {
 };
 
 const flagged = [
-  { author: "Anonymous", target: "Jonah Brecht", rating: 1, text: "Reported as spam by three users — needs a look." },
-  { author: "Grace M.", target: "Tom Reilly", rating: 2, text: "Customer says the job was rescheduled twice without notice." },
+  {
+    author: "Anonymous",
+    target: "Jonah Brecht",
+    rating: 1,
+    text: "Reported as spam by three users — needs a look.",
+  },
+  {
+    author: "Grace M.",
+    target: "Tom Reilly",
+    rating: 2,
+    text: "Customer says the job was rescheduled twice without notice.",
+  },
 ];
 
 function AdminDashboard() {
@@ -75,7 +154,9 @@ function AdminDashboard() {
   useRevealOnScroll();
 
   const visible = requests.filter((r) =>
-    `${r.id} ${r.customer} ${r.service} ${r.tech}`.toLowerCase().includes(query.toLowerCase()),
+    `${r.id} ${r.customer} ${r.service} ${r.tech}`
+      .toLowerCase()
+      .includes(query.toLowerCase())
   );
 
   return (
@@ -91,15 +172,27 @@ function AdminDashboard() {
               A calm workspace for keeping FundiLink verified, fair and running smoothly.
             </p>
           </div>
-          <Button variant="outline">Export report</Button>
+          <Button variant="outline" className="rounded-xl">
+            Export report
+          </Button>
         </header>
 
         <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.label} data-reveal className="lift rounded-2xl border bg-card p-5 shadow-soft">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary">
-                <s.icon size={18} aria-hidden />
-              </span>
+            <div
+              key={s.label}
+              data-reveal
+              className="group rounded-2xl border bg-card p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
+            >
+              <div className="flex items-center justify-between">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-soft text-primary transition-transform duration-300 group-hover:scale-110">
+                  <s.icon size={18} aria-hidden />
+                </span>
+                <span className="inline-flex items-center gap-1 text-xs text-success">
+                  <TrendingUp size={12} aria-hidden />
+                  {s.trend}
+                </span>
+              </div>
               <p className="mt-4 font-display text-3xl font-bold">{s.value}</p>
               <p className="text-sm font-medium">{s.label}</p>
               <p className="text-xs text-muted-foreground">{s.hint}</p>
@@ -108,7 +201,7 @@ function AdminDashboard() {
         </section>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-          <section data-reveal className="rounded-2xl border bg-card shadow-soft">
+          <section data-reveal className="rounded-2xl border bg-card shadow-card">
             <div className="flex items-center justify-between border-b p-5">
               <h2 className="text-lg font-semibold">Technician verification</h2>
               <Badge variant="secondary">{pending.length - reviewed.length} pending</Badge>
@@ -117,7 +210,10 @@ function AdminDashboard() {
               {pending.map((p) => {
                 const done = reviewed.includes(p.name);
                 return (
-                  <li key={p.name} className="flex flex-wrap items-center justify-between gap-3 p-5">
+                  <li
+                    key={p.name}
+                    className="flex flex-wrap items-center justify-between gap-3 p-5 transition-colors hover:bg-secondary/50"
+                  >
                     <div className="min-w-0">
                       <p className="truncate font-medium">{p.name}</p>
                       <p className="text-sm text-muted-foreground">
@@ -130,10 +226,19 @@ function AdminDashboard() {
                       </Badge>
                     ) : (
                       <div className="flex gap-2">
-                        <Button size="sm" onClick={() => setReviewed((r) => [...r, p.name])}>
+                        <Button
+                          size="sm"
+                          className="rounded-xl"
+                          onClick={() => setReviewed((r) => [...r, p.name])}
+                        >
                           Approve
                         </Button>
-                        <Button size="sm" variant="outline" aria-label={`Reject ${p.name}`}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="rounded-xl"
+                          aria-label={`Reject ${p.name}`}
+                        >
                           <X size={15} aria-hidden />
                         </Button>
                       </div>
@@ -144,7 +249,7 @@ function AdminDashboard() {
             </ul>
           </section>
 
-          <section data-reveal className="rounded-2xl border bg-card shadow-soft">
+          <section data-reveal className="rounded-2xl border bg-card shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b p-5">
               <h2 className="text-lg font-semibold">Service requests</h2>
               <div className="relative w-full sm:w-64">
@@ -158,7 +263,7 @@ function AdminDashboard() {
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search requests"
                   aria-label="Search service requests"
-                  className="pl-9"
+                  className="rounded-xl pl-9"
                 />
               </div>
             </div>
@@ -166,31 +271,47 @@ function AdminDashboard() {
               <table className="w-full text-sm">
                 <thead className="text-left text-xs uppercase tracking-wide text-muted-foreground">
                   <tr className="border-b">
-                    <th scope="col" className="px-5 py-3 font-medium">Request</th>
-                    <th scope="col" className="px-5 py-3 font-medium">Customer</th>
-                    <th scope="col" className="px-5 py-3 font-medium">Technician</th>
-                    <th scope="col" className="px-5 py-3 font-medium">Status</th>
-                    <th scope="col" className="px-5 py-3 text-right font-medium">Amount</th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Request
+                    </th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Customer
+                    </th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Technician
+                    </th>
+                    <th scope="col" className="px-5 py-3 font-medium">
+                      Status
+                    </th>
+                    <th scope="col" className="px-5 py-3 text-right font-medium">
+                      Amount
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
                   {visible.map((r) => (
-                    <tr key={r.id}>
+                    <tr key={r.id} className="transition-colors hover:bg-secondary/50">
                       <td className="whitespace-nowrap px-5 py-4 font-medium">{r.id}</td>
-                      <td className="whitespace-nowrap px-5 py-4 text-muted-foreground">{r.customer}</td>
-                      <td className="whitespace-nowrap px-5 py-4 text-muted-foreground">{r.tech}</td>
+                      <td className="whitespace-nowrap px-5 py-4 text-muted-foreground">
+                        {r.customer}
+                      </td>
+                      <td className="whitespace-nowrap px-5 py-4 text-muted-foreground">
+                        {r.tech}
+                      </td>
                       <td className="px-5 py-4">
                         <Badge className={cn("whitespace-nowrap", statusTone[r.status])}>
                           {r.status}
                         </Badge>
                       </td>
-                      <td className="whitespace-nowrap px-5 py-4 text-right font-medium">{r.amount}</td>
+                      <td className="whitespace-nowrap px-5 py-4 text-right font-medium">
+                        {r.amount}
+                      </td>
                     </tr>
                   ))}
                   {visible.length === 0 && (
                     <tr>
                       <td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">
-                        No requests match “{query}”.
+                        No requests match "{query}".
                       </td>
                     </tr>
                   )}
@@ -200,21 +321,29 @@ function AdminDashboard() {
           </section>
         </div>
 
-        <section data-reveal className="mt-10 rounded-2xl border bg-card p-6 shadow-soft">
+        <section data-reveal className="mt-10 rounded-2xl border bg-card p-6 shadow-card">
           <h2 className="text-lg font-semibold">Flagged reviews</h2>
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             {flagged.map((f) => (
-              <article key={f.text} className="rounded-xl bg-secondary/60 p-4">
+              <article
+                key={f.text}
+                className="rounded-xl bg-secondary/60 p-4 transition-all duration-300 hover:shadow-soft"
+              >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-sm font-semibold">
-                    {f.author} <span className="font-normal text-muted-foreground">on {f.target}</span>
+                    {f.author}{" "}
+                    <span className="font-normal text-muted-foreground">on {f.target}</span>
                   </p>
                   <StarRating value={f.rating} size={13} showValue={false} />
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{f.text}</p>
                 <div className="mt-3 flex gap-2">
-                  <Button size="sm" variant="outline">Keep</Button>
-                  <Button size="sm" variant="ghost">Remove</Button>
+                  <Button size="sm" variant="outline" className="rounded-xl">
+                    Keep
+                  </Button>
+                  <Button size="sm" variant="ghost" className="rounded-xl">
+                    Remove
+                  </Button>
                 </div>
               </article>
             ))}
